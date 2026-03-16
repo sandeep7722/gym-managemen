@@ -15,6 +15,7 @@ function Home() {
     payment_till: '',
     membership: ''
   });
+  const [searchTerm, setSearchTerm] = useState('');
 
   const getCardClass = (paymentTill) => {
     const tillDate = new Date(paymentTill);
@@ -26,6 +27,12 @@ function Home() {
     if (diffDays <= 7) return 'yellow';
     return 'green';
   };
+
+  const filteredCustomers = customerDetails.filter(customer =>
+    customer.customer_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    customer.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    customer.customer_phoneNo.includes(searchTerm)
+  );
 
   const handleEdit = (customer) => {
     setEditingCustomer(customer);
@@ -63,9 +70,17 @@ function Home() {
 
   return (
     <div className="home">
-      <h2>Customer Details</h2>
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search by ID, Name, or Phone Number..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+      </div>
       <div className="customer-grid">
-        {customerDetails.map((customer) => (
+        {filteredCustomers.map((customer) => (
           <div key={customer.customer_id} className={`customer-card ${getCardClass(customer.payment_till)}`}>
             <div className="card-header">
               <h3>{customer.customer_name}</h3>
@@ -88,51 +103,80 @@ function Home() {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h3>Edit Customer</h3>
             <form onSubmit={handleEditSubmit}>
-              <label>ID:</label>
-              <input type="text" value={editingCustomer.customer_id} readOnly />
+              <div className="form-row">
+                <div className="form-group">
+                  <label>ID:</label>
+                  <input type="text" value={editingCustomer.customer_id} readOnly />
+                </div>
+                <div className="form-group">
+                  <label>Reference ID:</label>
+                  <input type="text" value={editForm.customer_referenceId} onChange={(e) => setEditForm({...editForm, customer_referenceId: e.target.value})} required />
+                </div>
+              </div>
 
-              <label>Name:</label>
-              <input type="text" value={editForm.customer_name} onChange={(e) => setEditForm({...editForm, customer_name: e.target.value})} required />
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Name:</label>
+                  <input type="text" value={editForm.customer_name} onChange={(e) => setEditForm({...editForm, customer_name: e.target.value})} required />
+                </div>
+                <div className="form-group">
+                  <label>Gender:</label>
+                  <select value={editForm.customer_gender} onChange={(e) => setEditForm({...editForm, customer_gender: e.target.value})} required>
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
 
-              <label>Gender:</label>
-              <select value={editForm.customer_gender} onChange={(e) => setEditForm({...editForm, customer_gender: e.target.value})} required>
-                <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Age:</label>
+                  <input type="number" value={editForm.customer_age} onChange={(e) => setEditForm({...editForm, customer_age: e.target.value})} />
+                </div>
+                <div className="form-group">
+                  <label>Phone Number:</label>
+                  <input type="text" value={editForm.customer_phoneNo} onChange={(e) => setEditForm({...editForm, customer_phoneNo: e.target.value})} required />
+                </div>
+              </div>
 
-              <label>Age:</label>
-              <input type="number" value={editForm.customer_age} onChange={(e) => setEditForm({...editForm, customer_age: e.target.value})} />
+              <div className="form-group full-width">
+                <label>Address:</label>
+                <input type="text" value={editForm.customer_address} onChange={(e) => setEditForm({...editForm, customer_address: e.target.value})} />
+              </div>
 
-              <label>Phone Number:</label>
-              <input type="text" value={editForm.customer_phoneNo} onChange={(e) => setEditForm({...editForm, customer_phoneNo: e.target.value})} required />
+              <div className="form-group full-width">
+                <label>Email:</label>
+                <input type="email" value={editForm.customer_email} onChange={(e) => setEditForm({...editForm, customer_email: e.target.value})} required />
+              </div>
 
-              <label>Address:</label>
-              <input type="text" value={editForm.customer_address} onChange={(e) => setEditForm({...editForm, customer_address: e.target.value})} />
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Payment Date:</label>
+                  <input type="date" value={editForm.payment_date} onChange={(e) => setEditForm({...editForm, payment_date: e.target.value})} required />
+                </div>
+                <div className="form-group">
+                  <label>Payment Till:</label>
+                  <input type="date" value={editForm.payment_till} onChange={(e) => setEditForm({...editForm, payment_till: e.target.value})} required />
+                </div>
+              </div>
 
-              <label>Email:</label>
-              <input type="email" value={editForm.customer_email} onChange={(e) => setEditForm({...editForm, customer_email: e.target.value})} required />
+              <div className="form-group full-width">
+                <label>Membership:</label>
+                <select value={editForm.membership} onChange={(e) => setEditForm({...editForm, membership: e.target.value})} required>
+                  <option value="">Select</option>
+                  <option value="Monthly">Monthly</option>
+                  <option value="Quarterly">Quarterly</option>
+                  <option value="Yearly">Yearly</option>
+                </select>
+              </div>
 
-              <label>Reference ID:</label>
-              <input type="text" value={editForm.customer_referenceId} onChange={(e) => setEditForm({...editForm, customer_referenceId: e.target.value})} required />
-
-              <label>Payment Date:</label>
-              <input type="date" value={editForm.payment_date} onChange={(e) => setEditForm({...editForm, payment_date: e.target.value})} required />
-
-              <label>Payment Till:</label>
-              <input type="date" value={editForm.payment_till} onChange={(e) => setEditForm({...editForm, payment_till: e.target.value})} required />
-
-              <label>Membership:</label>
-              <select value={editForm.membership} onChange={(e) => setEditForm({...editForm, membership: e.target.value})} required>
-                <option value="">Select</option>
-                <option value="Gold">Gold</option>
-                <option value="Basic">Basic</option>
-              </select>
-
-              <button type="submit">Update Customer</button>
+              <div className="modal-buttons">
+                <button type="submit">Update</button>
+                <button type="button" onClick={closeEditModal}>Cancel</button>
+              </div>
             </form>
-            <button className="close-btn" onClick={closeEditModal}>Close</button>
           </div>
         </div>
       )}
