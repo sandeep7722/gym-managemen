@@ -120,7 +120,10 @@ function Header() {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             {modalType === 'attendance' && (
               <>
-                <h3>Mark Attendance</h3>
+                <div className="modal-header">
+                  <h3>Mark Attendance</h3>
+                  <button className="close-btn" onClick={closeModal}>×</button>
+                </div>
                 <form onSubmit={handleAttendanceSubmit}>
                   <label>Customer ID or Phone Number:</label>
                   <input
@@ -136,7 +139,10 @@ function Header() {
             )}
             {modalType === 'addCustomer' && (
               <>
-                <h3>Add Customer</h3>
+                <div className="modal-header">
+                  <h3>Add Customer</h3>
+                  <button className="close-btn" onClick={closeModal}>×</button>
+                </div>
                 <form onSubmit={handleAddCustomerSubmit}>
                   <label>Name <span style={{color: 'red'}}>*</span>:</label>
                   <input type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} required />
