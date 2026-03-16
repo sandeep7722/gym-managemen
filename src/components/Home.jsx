@@ -101,7 +101,10 @@ function Home() {
       {editingCustomer && (
         <div className="modal-overlay" onClick={closeEditModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Edit Customer</h3>
+            <div className="modal-header">
+              <h3>Edit Customer</h3>
+              <button className="close-btn" onClick={closeEditModal}>×</button>
+            </div>
             <form onSubmit={handleEditSubmit}>
               <div className="form-row">
                 <div className="form-group">
