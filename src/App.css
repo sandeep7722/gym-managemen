@@ -101,8 +101,10 @@
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
+  max-width: 500px;
   width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
   text-align: center;
 }
 
@@ -123,14 +125,16 @@
   color: #555;
 }
 
-.modal-content input {
+.modal-content input,
+.modal-content select {
   padding: 0.75rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
 }
 
-.modal-content input:focus {
+.modal-content input:focus,
+.modal-content select:focus {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
@@ -222,6 +226,7 @@
   .modal-content {
     padding: 1.5rem;
     width: 95%;
+    max-height: 90vh;
   }
 }
 

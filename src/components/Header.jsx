@@ -5,41 +5,86 @@ import { customerDetails } from '../data/customerDetails';
 function Header() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(null); // 'attendance' or 'addCustomer'
   const [customerIdentifier, setCustomerIdentifier] = useState('');
   const [error, setError] = useState('');
+  // Add Customer form states
+  const [customerName, setCustomerName] = useState('');
+  const [customerGender, setCustomerGender] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerReferenceId, setCustomerReferenceId] = useState('');
+  const [customerAge, setCustomerAge] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
+  const [uploadPic, setUploadPic] = useState(null);
+  const [paymentDate, setPaymentDate] = useState('');
+  const [paymentTill, setPaymentTill] = useState('');
+  const [membership, setMembership] = useState('');
 
   const handleLogout = () => {
     navigate('/');
   };
 
   const handleAddCustomer = () => {
-    alert('Add Customer - Feature coming soon');
+    setModalType('addCustomer');
   };
 
   const handleMarkAttendance = () => {
-    setIsModalOpen(true);
+    setModalType('attendance');
   };
 
-  const handleModalSubmit = (e) => {
+  const handleAttendanceSubmit = (e) => {
     e.preventDefault();
     const customer = customerDetails.find(
       (c) => c.customer_id === customerIdentifier || c.customer_phoneNo === customerIdentifier
     );
     if (customer) {
       alert(`Attendance marked for ${customer.customer_name}`);
-      setIsModalOpen(false);
-      setCustomerIdentifier('');
-      setError('');
+      closeModal();
     } else {
       setError('Customer not found');
     }
   };
 
+  const handleAddCustomerSubmit = (e) => {
+    e.preventDefault();
+    const newCustomer = {
+      customer_id: (customerDetails.length + 1).toString(),
+      customer_name: customerName,
+      customer_email: customerEmail,
+      customer_phoneNo: customerPhone,
+      customer_address: customerAddress,
+      customer_age: parseInt(customerAge) || 0,
+      customer_gender: customerGender,
+      customer_referenceId: customerReferenceId,
+      customer_gymId: 'GYM001', // Default
+      customer_paymentStatus: 'Pending', // Default
+      customer_picUrl: uploadPic ? 'uploaded' : 'https://example.com/default.jpg',
+      payment_date: paymentDate,
+      payment_till: paymentTill,
+      membership: membership
+    };
+    customerDetails.push(newCustomer);
+    alert('Customer added successfully');
+    closeModal();
+  };
+
   const closeModal = () => {
-    setIsModalOpen(false);
+    setModalType(null);
     setCustomerIdentifier('');
     setError('');
+    // Reset add customer fields
+    setCustomerName('');
+    setCustomerGender('');
+    setCustomerPhone('');
+    setCustomerEmail('');
+    setCustomerReferenceId('');
+    setCustomerAge('');
+    setCustomerAddress('');
+    setUploadPic(null);
+    setPaymentDate('');
+    setPaymentTill('');
+    setMembership('');
   };
 
   return (
@@ -66,21 +111,76 @@ function Header() {
         </div>
       </header>
 
-      {isModalOpen && (
+      {modalType && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Mark Attendance</h3>
-            <form onSubmit={handleModalSubmit}>
-              <label>Customer ID or Phone Number:</label>
-              <input
-                type="text"
-                value={customerIdentifier}
-                onChange={(e) => setCustomerIdentifier(e.target.value)}
-                required
-              />
-              {error && <p className="error">{error}</p>}
-              <button type="submit">Submit</button>
-            </form>
+            {modalType === 'attendance' && (
+              <>
+                <h3>Mark Attendance</h3>
+                <form onSubmit={handleAttendanceSubmit}>
+                  <label>Customer ID or Phone Number:</label>
+                  <input
+                    type="text"
+                    value={customerIdentifier}
+                    onChange={(e) => setCustomerIdentifier(e.target.value)}
+                    required
+                  />
+                  {error && <p className="error">{error}</p>}
+                  <button type="submit">Submit</button>
+                </form>
+              </>
+            )}
+            {modalType === 'addCustomer' && (
+              <>
+                <h3>Add Customer</h3>
+                <form onSubmit={handleAddCustomerSubmit}>
+                  <label>Name <span style={{color: 'red'}}>*</span>:</label>
+                  <input type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} required />
+
+                  <label>Gender <span style={{color: 'red'}}>*</span>:</label>
+                  <select value={customerGender} onChange={(e) => setCustomerGender(e.target.value)} required>
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+
+                  <label>Age:</label>
+                  <input type="number" value={customerAge} onChange={(e) => setCustomerAge(e.target.value)} />
+
+                  <label>Phone Number <span style={{color: 'red'}}>*</span>:</label>
+                  <input type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} required />
+
+                  <label>Address:</label>
+                  <input type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} />
+
+                  <label>Email:</label>
+                  <input type="email" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} required />
+
+                  <label>Reference ID:</label>
+                  <input type="text" value={customerReferenceId} onChange={(e) => setCustomerReferenceId(e.target.value)} required />
+
+                  <label>Upload Picture:</label>
+                  <input type="file" onChange={(e) => setUploadPic(e.target.files[0])} />
+
+                  <label>Payment Date:</label>
+                  <input type="date" value={paymentDate} onChange={(e) => setPaymentDate(e.target.value)} required />
+
+                  <label>Payment Till:</label>
+                  <input type="date" value={paymentTill} onChange={(e) => setPaymentTill(e.target.value)} required />
+
+                  <label>Membership:</label>
+                  <select value={membership} onChange={(e) => setMembership(e.target.value)} required>
+                    <option value="">Select</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Semi-Annual">Semi-Annual</option>
+                    <option value="Annual">Annual</option>
+                  </select>
+
+                  <button type="submit">Add Customer</button>
+                </form>
+              </>
+            )}
             <button className="close-btn" onClick={closeModal}>Close</button>
           </div>
         </div>

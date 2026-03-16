@@ -10,7 +10,10 @@ export const customerDetails = [
     customer_referenceId: "REF001",
     customer_gymId: "GYM001",
     customer_paymentStatus: "Paid",
-    customer_picUrl: "https://example.com/pic1.jpg"
+    customer_picUrl: "https://example.com/pic1.jpg",
+    payment_date: "2023-01-01",
+    payment_till: "2023-12-31",
+    membership: "Annual"
   },
   {
     customer_id: "2",
@@ -23,7 +26,10 @@ export const customerDetails = [
     customer_referenceId: "REF002",
     customer_gymId: "GYM001",
     customer_paymentStatus: "Pending",
-    customer_picUrl: "https://example.com/pic2.jpg"
+    customer_picUrl: "https://example.com/pic2.jpg",
+    payment_date: "2023-02-01",
+    payment_till: "2023-07-31",
+    membership: "Semi-Annual"
   },
   {
     customer_id: "3",
@@ -36,6 +42,9 @@ export const customerDetails = [
     customer_referenceId: "REF003",
     customer_gymId: "GYM001",
     customer_paymentStatus: "Paid",
-    customer_picUrl: "https://example.com/pic3.jpg"
+    customer_picUrl: "https://example.com/pic3.jpg",
+    payment_date: "2023-03-01",
+    payment_till: "2024-02-28",
+    membership: "Annual"
   }
 ];
