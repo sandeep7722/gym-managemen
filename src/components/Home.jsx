@@ -16,6 +16,7 @@ function Home() {
     membership: ''
   });
   const [searchTerm, setSearchTerm] = useState('');
+  const [filterStatus, setFilterStatus] = useState('all');
 
   const getCardClass = (paymentTill) => {
     const tillDate = new Date(paymentTill);
@@ -28,11 +29,19 @@ function Home() {
     return 'green';
   };
 
-  const filteredCustomers = customerDetails.filter(customer =>
-    customer.customer_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    customer.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    customer.customer_phoneNo.includes(searchTerm)
-  );
+  const getCustomerStatus = (customer) => {
+    return getCardClass(customer.payment_till);
+  };
+
+  const filteredCustomers = customerDetails.filter(customer => {
+    const matchesSearch = customer.customer_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      customer.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      customer.customer_phoneNo.includes(searchTerm);
+    
+    const matchesFilter = filterStatus === 'all' || getCustomerStatus(customer) === filterStatus;
+    
+    return matchesSearch && matchesFilter;
+  });
 
   const handleEdit = (customer) => {
     setEditingCustomer(customer);
@@ -70,6 +79,32 @@ function Home() {
 
   return (
     <div className="home">
+      <div className="filter-container">
+        <button 
+          className={`filter-btn ${filterStatus === 'all' ? 'active' : ''}`} 
+          onClick={() => setFilterStatus('all')}
+        >
+          All
+        </button>
+        <button 
+          className={`filter-btn ${filterStatus === 'green' ? 'active' : ''}`} 
+          onClick={() => setFilterStatus('green')}
+        >
+          Paid
+        </button>
+        <button 
+          className={`filter-btn ${filterStatus === 'yellow' ? 'active' : ''}`} 
+          onClick={() => setFilterStatus('yellow')}
+        >
+          Expiring Soon
+        </button>
+        <button 
+          className={`filter-btn ${filterStatus === 'red' ? 'active' : ''}`} 
+          onClick={() => setFilterStatus('red')}
+        >
+          Expired
+        </button>
+      </div>
       <div className="search-container">
         <input
           type="text"
