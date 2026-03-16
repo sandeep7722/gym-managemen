@@ -12,8 +12,10 @@ export const customerDetails = [
     customer_paymentStatus: "Paid",
     customer_picUrl: "https://example.com/pic1.jpg",
     payment_date: "2023-01-01",
-    payment_till: "2023-12-31",
-    membership: "Annual"
+    payment_till: "2026-04-01",
+    membership: "Gold",
+    last_attendance_date: "2023-10-15",
+    last_profile_update: "2023-09-20"
   },
   {
     customer_id: "2",
@@ -28,8 +30,10 @@ export const customerDetails = [
     customer_paymentStatus: "Pending",
     customer_picUrl: "https://example.com/pic2.jpg",
     payment_date: "2023-02-01",
-    payment_till: "2023-07-31",
-    membership: "Semi-Annual"
+    payment_till: "2026-03-22",
+    membership: "Basic",
+    last_attendance_date: "2023-10-14",
+    last_profile_update: "2023-08-15"
   },
   {
     customer_id: "3",
@@ -44,7 +48,63 @@ export const customerDetails = [
     customer_paymentStatus: "Paid",
     customer_picUrl: "https://example.com/pic3.jpg",
     payment_date: "2023-03-01",
-    payment_till: "2024-02-28",
-    membership: "Annual"
+    payment_till: "2026-03-10",
+    membership: "Gold",
+    last_attendance_date: "2023-10-13",
+    last_profile_update: "2023-07-10"
+  },
+  {
+    customer_id: "4",
+    customer_name: "Alice Brown",
+    customer_email: "alice@example.com",
+    customer_phoneNo: "2233445566",
+    customer_address: "101 Pine St",
+    customer_age: 32,
+    customer_gender: "Female",
+    customer_referenceId: "REF004",
+    customer_gymId: "GYM001",
+    customer_paymentStatus: "Paid",
+    customer_picUrl: "https://example.com/pic4.jpg",
+    payment_date: "2026-02-01",
+    payment_till: "2026-05-01",
+    membership: "Gold",
+    last_attendance_date: "2026-03-15",
+    last_profile_update: "2026-02-10"
+  },
+  {
+    customer_id: "5",
+    customer_name: "Charlie Wilson",
+    customer_email: "charlie@example.com",
+    customer_phoneNo: "3344556677",
+    customer_address: "202 Oak St",
+    customer_age: 28,
+    customer_gender: "Male",
+    customer_referenceId: "REF005",
+    customer_gymId: "GYM001",
+    customer_paymentStatus: "Pending",
+    customer_picUrl: "https://example.com/pic5.jpg",
+    payment_date: "2026-01-15",
+    payment_till: "2026-03-18",
+    membership: "Basic",
+    last_attendance_date: "2026-03-14",
+    last_profile_update: "2026-01-20"
+  },
+  {
+    customer_id: "6",
+    customer_name: "Diana Lee",
+    customer_email: "diana@example.com",
+    customer_phoneNo: "4455667788",
+    customer_address: "303 Maple St",
+    customer_age: 26,
+    customer_gender: "Female",
+    customer_referenceId: "REF006",
+    customer_gymId: "GYM001",
+    customer_paymentStatus: "Paid",
+    customer_picUrl: "https://example.com/pic6.jpg",
+    payment_date: "2025-12-01",
+    payment_till: "2026-03-05",
+    membership: "Basic",
+    last_attendance_date: "2026-03-12",
+    last_profile_update: "2025-12-15"
   }
 ];

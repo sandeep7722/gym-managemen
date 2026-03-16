@@ -39,6 +39,7 @@ function Header() {
       (c) => c.customer_id === customerIdentifier || c.customer_phoneNo === customerIdentifier
     );
     if (customer) {
+      customer.last_attendance_date = new Date().toISOString().split('T')[0];
       alert(`Attendance marked for ${customer.customer_name}`);
       closeModal();
     } else {
@@ -48,6 +49,7 @@ function Header() {
 
   const handleAddCustomerSubmit = (e) => {
     e.preventDefault();
+    const currentDate = new Date().toISOString().split('T')[0];
     const newCustomer = {
       customer_id: (customerDetails.length + 1).toString(),
       customer_name: customerName,
@@ -62,7 +64,9 @@ function Header() {
       customer_picUrl: uploadPic ? 'uploaded' : 'https://example.com/default.jpg',
       payment_date: paymentDate,
       payment_till: paymentTill,
-      membership: membership
+      membership: membership,
+      last_attendance_date: '',
+      last_profile_update: currentDate
     };
     customerDetails.push(newCustomer);
     alert('Customer added successfully');
@@ -172,9 +176,8 @@ function Header() {
                   <label>Membership:</label>
                   <select value={membership} onChange={(e) => setMembership(e.target.value)} required>
                     <option value="">Select</option>
-                    <option value="Monthly">Monthly</option>
-                    <option value="Semi-Annual">Semi-Annual</option>
-                    <option value="Annual">Annual</option>
+                    <option value="Gold">Gold</option>
+                    <option value="Basic">Basic</option>
                   </select>
 
                   <button type="submit">Add Customer</button>
