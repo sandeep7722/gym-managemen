@@ -183,7 +183,6 @@ function Header() {
                 </form>
               </>
             )}
-            <button className="close-btn" onClick={closeModal}>Close</button>
           </div>
         </div>
       )}
