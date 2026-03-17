@@ -93,23 +93,16 @@ function Header() {
 
   return (
     <>
-      <header style={{
-        backgroundColor: '#007bff',
-        color: 'white',
-        padding: '1rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
+      <header className="app-header">
         <h1>Gym Management</h1>
-        <div>
+        <div className="header-buttons">
           {location.pathname === '/' ? (
-            <button onClick={handleMarkAttendance} style={{ margin: '0 0.5rem', padding: '0.5rem 1rem' }}>Mark Attendance</button>
+            <button onClick={handleMarkAttendance} className="header-btn">Mark Attendance</button>
           ) : (
             <>
-              <button onClick={handleAddCustomer} style={{ margin: '0 0.5rem', padding: '0.5rem 1rem' }}>Add Customer</button>
-              <button onClick={handleMarkAttendance} style={{ margin: '0 0.5rem', padding: '0.5rem 1rem' }}>Mark Attendance</button>
-              <button onClick={handleLogout} style={{ margin: '0 0.5rem', padding: '0.5rem 1rem' }}>Logout</button>
+              <button onClick={handleAddCustomer} className="header-btn">Add Customer</button>
+              <button onClick={handleMarkAttendance} className="header-btn">Mark Attendance</button>
+              <button onClick={handleLogout} className="header-btn">Logout</button>
             </>
           )}
         </div>
